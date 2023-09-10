@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import CreditCard 
+from creditcard import CreditCard as CreditCardValidator
 
 class CreditCardSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,11 +22,14 @@ class CreditCardSerializer(serializers.ModelSerializer):
         return value
 
     def validate_number(self, value):
-        # Validar o número do cartão usando a biblioteca creditcard
-        card = CreditCard(card_number=value)
-        if not card.is_valid():
-            raise serializers.ValidationError("Número de cartão de crédito inválido.")
-        return value
+        try:
+            card = CreditCardValidator(value)
+            if card.is_valid():
+                return value
+            else:
+                raise serializers.ValidationError("Número de cartão de crédito inválido.")
+        except Exception as e:
+            raise serializers.ValidationError("Erro ao validar o número de cartão de crédito.")
 
     def validate_cvv(self, value):
         # Validar o CVV
