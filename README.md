@@ -36,6 +36,8 @@ git clone https://github.com/sadinho/apyPythonDjangoRest.git
 ```bash
 cd apyPythonDjangoRest
 ```
+### A Pasta do Projeto é a api!
+
 ## não é preciso configurar um banco de dados pois esse projeto usa o sqlite3 porem caso queira configurar um novo banco fique a vontade
 ## Instale as dependências necessárias usando o comando abaixo no terminal:
 ```bash
