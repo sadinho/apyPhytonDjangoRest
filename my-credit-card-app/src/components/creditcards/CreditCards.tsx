@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import { useQuery } from 'react-query';
 import api from '@/api';
 import { TableComponent } from '@/components/Table';
-import { Card, CardBody, CardTitle, CardText, Button, Input, FormGroup } from 'reactstrap';
+import { Spinner, CardBody, Card, CardText, CardTitle} from 'reactstrap';
 import { useMediaQuery } from 'react-responsive';
 import * as S from './styles';
 import { useRouter } from 'next/router';
@@ -17,6 +17,18 @@ interface CreditCard {
   brand: string;
   cvv: string;
 }
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    transition: 'transform 0.5s ease-in-out',
+  },
+};
 
 const columns: any = [
   {
@@ -80,25 +92,49 @@ const CreditCards = () => {
   const [editedBrand, setEditedBrand] = useState<string>('');
   const [editedCvv, setEditedCvv] = useState<string>('');
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false); // Estado para controlar a abertura do modal de edição
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [newCard, setNewCard] = useState<boolean>(false);
+
+  const cleanData = () => {
+    setEditCard(null);
+    setEditedHolder('');
+    setEditedNumber('');
+    setEditedExpDate('');
+    setEditedBrand('');
+    setEditedCvv('');
+    setSelectedCardId(null);
+  }
 
   const handleEditClick = (id: number) => {
     const cardToEdit = creditCards && creditCards.find((card) => card.id === id);
     if (cardToEdit) {
       setEditCard(id);
+      setSelectedCardId(id);
+      setNewCard(false);
       setEditedHolder(cardToEdit.holder);
       setEditedNumber(cardToEdit.number);
       setEditedExpDate(cardToEdit.exp_date);
       setEditedBrand(cardToEdit.brand);
       setEditedCvv(cardToEdit.cvv);
-      setSelectedCardId(id);
-      setIsEditModalOpen(true); // Abra o modal de edição ao clicar em Editar
+      setIsEditModalOpen(true);
     }
   };
 
+
   const handleSaveClick = async () => {
     try {
-      if (selectedCardId !== null) {
+      if (newCard) {
+
+        await api.post('/creditcards/', {
+          holder: editedHolder,
+          number: editedNumber,
+          exp_date: editedExpDate,
+          brand: editedBrand,
+          cvv: editedCvv,
+        });
+      
+      } else {
+
         await api.put(`/creditcards/${selectedCardId}/`, {
           holder: editedHolder,
           number: editedNumber,
@@ -106,24 +142,36 @@ const CreditCards = () => {
           brand: editedBrand,
           cvv: editedCvv,
         });
-
-        await refetch();
-        setIsEditModalOpen(false);
+        
       }
-    } catch (error) {
-      console.error('Erro ao salvar as alterações:', error);
+
+      await refetch();
+      setIsEditModalOpen(false);
+      setSelectedCardId(null);
+      cleanData()
+    } catch (error: any) {
+      alert(`Erro ao salvar as alterações:, ${error}`);
     }
   };
+
 
   const handleCancelEdit = () => {
     setIsEditModalOpen(false);
     setSelectedCardId(null);
+    setNewCard(false);
+    cleanData()
   };
 
   const handleDeleteClick = (id: number) => {
     setSelectedCardId(id);
     setIsDeleteModalOpen(true);
   };
+
+  const handleAddNewClick = () => {
+    setNewCard(true);
+    setIsEditModalOpen(true);
+  };
+
 
   const handleConfirmDelete = async () => {
     try {
@@ -133,8 +181,8 @@ const CreditCards = () => {
       }
 
       setIsDeleteModalOpen(false);
-    } catch (error) {
-      console.error('Erro ao excluir o cartão de crédito:', error);
+    } catch (error: any) {
+      alert(`Erro ao excluir o cartão de crédito::, ${error}`)
     }
   };
 
@@ -157,6 +205,7 @@ const CreditCards = () => {
   return (
     <div>
       <h1>Cartões de Crédito</h1>
+      <S.CustomAddButton onClick={() => handleAddNewClick()}>Adicionar Novo Cartão</S.CustomAddButton>
       {creditCards ? (
         <>
           {isTabletOrLarger ? (
@@ -178,11 +227,11 @@ const CreditCards = () => {
 
                       <div>
                         <div>
-                          {/* Renderiza o componente de botão de edição personalizado */}
+                         
                           <S.CustomEditButton onClick={() => handleEditClick(card.id)}>
                             <MdModeEdit />
                           </S.CustomEditButton>
-                          {/* Renderiza o componente de botão de exclusão personalizado */}
+                        
                           <S.CustomDeleteButton onClick={() => handleDeleteClick(card.id)}>
                             <MdDelete />
                           </S.CustomDeleteButton>
@@ -199,58 +248,61 @@ const CreditCards = () => {
             isOpen={isDeleteModalOpen}
             onRequestClose={handleCancelDelete}
             contentLabel="Confirmar Exclusão"
+            style={customStyles}
           >
             <h2>Confirmar Exclusão</h2>
             <p>Tem certeza de que deseja excluir este cartão de crédito?</p>
-            <button onClick={handleConfirmDelete}>Confirmar</button>
-            <button onClick={handleCancelDelete}>Cancelar</button>
+            <S.CustomDeleteButton onClick={handleConfirmDelete}>Confirmar</S.CustomDeleteButton>
+            <S.CustomAddButton onClick={handleCancelDelete}>Cancelar</S.CustomAddButton>
           </Modal>
 
           <Modal
             isOpen={isEditModalOpen}
             onRequestClose={handleCancelEdit}
             contentLabel="Editar Cartão de Crédito"
+            style={customStyles}
           >
-            <h2>Editar Cartão de Crédito</h2>
-            <div>
-              <label>Titular:</label>
-              <input
+            <h2>{newCard ? 'Adicionar novo cartão' : 'Editar Cartão'}</h2>
+            <S.CustomInputContainer>
+              <S.CustomLabel>Titular:</S.CustomLabel>
+              <S.CustomInput
                 type="text"
                 value={editedHolder}
                 onChange={(e) => setEditedHolder(e.target.value)}
               />
-            </div>
-            <div>
-              <label>Nº Cartão:</label>
-              <input
+            </S.CustomInputContainer>
+            <S.CustomInputContainer>
+              <S.CustomLabel>Nº Cartão:</S.CustomLabel>
+              <S.CustomInput
                 type="text"
                 value={editedNumber}
                 onChange={(e) => setEditedNumber(e.target.value)}
               />
-            </div>
-            <div>
-              <label>Vencimento:</label>
-              <input
+            </S.CustomInputContainer>
+            <S.CustomInputContainer>
+              <S.CustomLabel>Vencimento:</S.CustomLabel>
+              <S.CustomInput
                 type="text"
                 value={editedExpDate}
                 onChange={(e) => setEditedExpDate(e.target.value)}
               />
-            </div>
-            <div>
-              <label>CVV:</label>
-              <input
+            </S.CustomInputContainer>
+            <S.CustomInputContainer>
+              <S.CustomLabel>CVV:</S.CustomLabel>
+              <S.CustomInput
                 type="text"
                 value={editedCvv}
                 onChange={(e) => setEditedCvv(e.target.value)}
               />
-            </div>
-            <button onClick={handleSaveClick}>Salvar</button>
-            <button onClick={handleCancelEdit}>Cancelar</button>
+            </S.CustomInputContainer>
+            <S.CustomEditButton onClick={handleSaveClick}>Salvar</S.CustomEditButton>
+            <S.CustomDeleteButton onClick={handleCancelEdit}>Cancelar</S.CustomDeleteButton>
           </Modal>
         </>
       ) : (
-        <div>Carregando...</div>
+        <S.CustonCard>Carregando...<Spinner color='success' /></S.CustonCard>
       )}
+
     </div>
   );
 };

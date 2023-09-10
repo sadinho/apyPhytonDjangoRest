@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 import api from '@/api';
+import * as S from './styles'
 
 const Login = () => {
   const router = useRouter();
@@ -34,24 +35,27 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <S.CustonCard>
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
-        <input
+      <S.CustomInputContainer>
+        <S.CustomInput
           type="text"
           placeholder="Usuário"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <input
+        <S.CustomInput
           type="password"
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Login</button>
+        
+        <S.CustomButton type="submit">Login</S.CustomButton>
+        </S.CustomInputContainer>
       </form>
-    </div>
+    </S.CustonCard>
   );
 };
 
