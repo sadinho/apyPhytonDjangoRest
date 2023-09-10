@@ -83,6 +83,10 @@ DELETE /creditcards/{id}/: Exclua um cartão de crédito existente.
 python manage.py test
 ```
 ## Print de Telas
+#### Admin Django
+
+![Tela admin Django](https://user-images.githubusercontent.com/50503203/266842146-d165b9cf-68df-43ce-91da-3640cc987ddc.png)
+
 #### Tela Rota Token Django Rest Framework
 ![Tela Rota Token Django Rest Framework](https://user-images.githubusercontent.com/50503203/266839378-78676272-faf2-4c6e-8553-06a830262a81.png)
 
