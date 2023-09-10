@@ -17,7 +17,8 @@ Recomendamos criar um ambiente virtual para isolar as dependências do projeto. 
 ```bash
 # Crie um ambiente virtual (opcional)
 python -m venv myenv
-
+```
+```bash
 # Ative o ambiente virtual:
 
 # No Linux/macOS
@@ -25,6 +26,11 @@ source myenv/bin/activate
 
 # No Windows
 myenv\Scripts\activate
+```
+## Instalação
+Clone o repositório:
+```bash
+
 
 
 
