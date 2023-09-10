@@ -75,6 +75,20 @@ DELETE /creditcards/{id}/: Exclua um cartão de crédito existente.
 ```bash
 python manage.py test
 ```
+## Print de Telas
+#### Tela Rota Token Django Rest Framework
+![Tela Rota Token Django Rest Framework](https://user-images.githubusercontent.com/50503203/266839378-78676272-faf2-4c6e-8553-06a830262a81.png)
+
+#### Tela Rota get Creditcards Django Rest Framework
+![Tela Rota get Creditcards Django Rest Framework](https://user-images.githubusercontent.com/50503203/266839687-3e0d2395-5f84-4fa5-af12-131ab8aef6c7.png)
+
+![Tela Rota Creditcards Django Rest Framework](https://user-images.githubusercontent.com/50503203/266839875-dc29c690-9388-4e08-b86d-0c2afd1c12c3.png)
+
+#### Payload
+
+![Payload Rota Creditcards Django Rest Framework](https://user-images.githubusercontent.com/50503203/266839978-17b9d493-7860-48af-af2c-4960c2ef4303.png)
+
+![Payload Rota Creditcards Django Rest Framework](https://user-images.githubusercontent.com/50503203/266840109-0f252720-e863-4e40-8447-3c5564b78e09.png)
 
 ## Observação 
 ### As rotas estão protegidas, sendo possível apenas passando o Bearer token na requisição, porém caso queira testar as rotas na view do python '/creditcards' comente as sequintes linhas do codigo no arquivo view.py dentro do core.
@@ -87,9 +101,9 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
 ```
-## É preciso tirar esses decorators para conseguir usar sem autenticação no ambiente de desenvolvimento
+## É preciso tirar esses decorators para conseguir usar sem autenticação no ambiente de desenvolvimento.
 
-## para testar com ferramentas como o inmsomnia ou postman, configurar a autenticação Bearer no header da requisição.
+## Para testar com ferramentas como o inmsomnia ou postman, configurar a autenticação Bearer no header da requisição.
 ```bash
 Authorization: Bearer seu-token-jwt-aqui
 ```
