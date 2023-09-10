@@ -18,6 +18,11 @@ Recomendamos criar um ambiente virtual para isolar as dependências do projeto. 
 # Crie um ambiente virtual (opcional)
 python -m venv myenv
 ```
+#### ou
+
+```bash
+python3 -m venv myenv
+```
 ```bash
 # Ative o ambiente virtual:
 
