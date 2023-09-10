@@ -18,6 +18,11 @@ Recomendamos criar um ambiente virtual para isolar as dependências do projeto. 
 # Crie um ambiente virtual (opcional)
 python -m venv myenv
 ```
+#### ou
+
+```bash
+python3 -m venv myenv
+```
 ```bash
 # Ative o ambiente virtual:
 
@@ -36,6 +41,8 @@ git clone https://github.com/sadinho/apyPythonDjangoRest.git
 ```bash
 cd apyPythonDjangoRest
 ```
+### A Pasta do Projeto é a api!
+
 ## não é preciso configurar um banco de dados pois esse projeto usa o sqlite3 porem caso queira configurar um novo banco fique a vontade
 ## Instale as dependências necessárias usando o comando abaixo no terminal:
 ```bash
@@ -76,6 +83,10 @@ DELETE /creditcards/{id}/: Exclua um cartão de crédito existente.
 python manage.py test
 ```
 ## Print de Telas
+#### Admin Django
+
+![Tela admin Django](https://user-images.githubusercontent.com/50503203/266842146-d165b9cf-68df-43ce-91da-3640cc987ddc.png)
+
 #### Tela Rota Token Django Rest Framework
 ![Tela Rota Token Django Rest Framework](https://user-images.githubusercontent.com/50503203/266839378-78676272-faf2-4c6e-8553-06a830262a81.png)
 
