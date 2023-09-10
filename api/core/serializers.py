@@ -7,6 +7,12 @@ class CreditCardSerializer(serializers.ModelSerializer):
         model = CreditCard
         fields = ('id','exp_date', 'holder', 'number', 'cvv', 'brand')
 
+    def get_fields(self):
+        fields = super(CreditCardSerializer, self).get_fields()
+        if self.context['request'].method in ['POST', 'PUT']:
+            fields['brand'].read_only = True
+        return fields
+
     def validate_exp_date(self, value):
         # Validar a data de expiração
         from datetime import date
