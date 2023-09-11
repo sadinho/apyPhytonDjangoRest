@@ -118,5 +118,73 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 ```bash
 Authorization: Bearer seu-token-jwt-aqui
 ```
+# my-credit-card-app frontend em nextjs
+
+# Como usar o Dockerfile
+
+Este Dockerfile pode ser usado para construir uma imagem Docker para o projeto Next `my-credit-card-app`.
+
+## Construindo a imagem
+
+Para construir a imagem, execute o seguinte comando:
+```bash
+docker build -t my-credit-card-app .
+```
+Isso criará uma imagem chamada `my-credit-card-app`.
+
+## Executando a imagem
+
+Para executar a imagem, execute o seguinte comando:
+```bash
+docker run -p 3000:3000 my-credit-card-app
+```
+Isso iniciará o servidor Next na porta 3000.
+
+## Acesso ao servidor
+
+Para acessar o servidor, abra um navegador em `http://localhost:3000`.
+
+# Como instalar e rodar o Next.js
+
+O Next.js é uma estrutura de desenvolvimento de aplicações web frontend React que facilita a criação de aplicações web estáticas e servidoras.
+
+## Instalando 
+
+Para instalar , execute o seguinte comando:
+```bash
+npm install
+ou
+yarn
+```
+Apos isso pode rodar 
+```bash
+npm run dev
+npm run build
+npm run start
+ou
+yarn dev
+yarn build
+yarn start
+```
+
+
+Para acessar o servidor, abra um navegador em `http://localhost:3000`.
+
+Para logar a api Django deve ja estar rodando na porta 8000
+Logar com o usuario cadastrado 
+#### Tela Front nextjs
+Login
+![Tela front](https://user-images.githubusercontent.com/50503203/266889666-735085dc-540f-4c72-841a-2fc1c00492ff.png)
+
+Tabela paginada
+![Tela front](https://user-images.githubusercontent.com/50503203/266889814-7db0b75d-8169-4bfb-bbd9-785fe0d0aafe.png)
+
+Modais
+![Tela front](https://user-images.githubusercontent.com/50503203/266889961-43c2139d-8038-4803-afba-b05062277c0c.png)
+![Tela front](https://user-images.githubusercontent.com/50503203/266890097-27c62103-1f62-4538-9f37-d5ae28043c2b.png)
+![Tela front](https://user-images.githubusercontent.com/50503203/266890221-b51abad7-e552-42d3-ad5c-27df3fd674e3.png)
+
+#### Mobile em card responsividade
+![Tela front](https://user-images.githubusercontent.com/50503203/266890450-c392a74f-1de2-439d-91db-1b979786a838.png)
 
 
