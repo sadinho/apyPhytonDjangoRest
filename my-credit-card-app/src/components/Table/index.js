@@ -6,7 +6,6 @@ import {
 import { MdImportExport } from 'react-icons/md/';
 import { Button } from 'reactstrap';
 
-
 export function TableComponent({ columns, data }) {
   const {
     getTableProps,
@@ -44,14 +43,16 @@ export function TableComponent({ columns, data }) {
   };
   return (
     <Styles>
-      <table {...getTableProps()} style={{ width: '100%', overflowX: 'auto', fontFamily: 'inter'}}>
+      <table {...getTableProps()} style={{ width: '100%', overflowX: 'auto', fontFamily: 'inter' }}>
         <thead>
-          {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup, index) => (
             <tr
+              key={index}
               {...headerGroup.getHeaderGroupProps()}
             >
-              {headerGroup.headers.map((column, index) => (
+              {headerGroup.headers.map((column, index2) => (
                 <th
+                  key={index2}
                   className={column.itemType && `header${index}`}
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                   style={{ width: column.width }}
@@ -59,11 +60,11 @@ export function TableComponent({ columns, data }) {
                   <HeaderWrapper align={column.align}>
                     {column.render('Header')}
                     {column.Header && (
-                  
+
                       <div style={{ marginLeft: '10px' }}>
                         <MdImportExport />
                       </div>
-                      
+
                     )}
                   </HeaderWrapper>
                 </th>
@@ -75,9 +76,10 @@ export function TableComponent({ columns, data }) {
           {page.map((row, i) => {
             prepareRow(row);
             return (
-              <TableRowWrapper {...row.getRowProps()}>
-                {row.cells.map(cell => (
+              <TableRowWrapper key={i} {...row.getRowProps()}>
+                {row.cells.map((cell, x) => (
                   <td
+                    key={x}
                     {...cell.getCellProps()}
                     style={{ paddingRight: '20.68px' }}
                   >

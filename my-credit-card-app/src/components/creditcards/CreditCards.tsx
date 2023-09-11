@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import { useQuery } from 'react-query';
 import api from '@/api';
 import { TableComponent } from '@/components/Table';
-import { Spinner, CardBody, Card, CardText, CardTitle} from 'reactstrap';
+import { Spinner, CardBody, Card, CardText, CardTitle } from 'reactstrap';
 import { useMediaQuery } from 'react-responsive';
 import * as S from './styles';
 import { useRouter } from 'next/router';
@@ -61,7 +61,7 @@ const columns: any = [
   },
 ];
 
-const CreditCards = () => {
+const CreditCards: React.FC = () => {
   const router = useRouter();
   const { data: creditCards, error, refetch } = useQuery<CreditCard[]>(
     'creditcards',
@@ -94,6 +94,8 @@ const CreditCards = () => {
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [newCard, setNewCard] = useState<boolean>(false);
+  const [errorMessages, setErrorMessages] = useState([]);
+
 
   const cleanData = () => {
     setEditCard(null);
@@ -132,7 +134,7 @@ const CreditCards = () => {
           brand: editedBrand,
           cvv: editedCvv,
         });
-      
+
       } else {
 
         await api.put(`/creditcards/${selectedCardId}/`, {
@@ -142,7 +144,7 @@ const CreditCards = () => {
           brand: editedBrand,
           cvv: editedCvv,
         });
-        
+
       }
 
       await refetch();
@@ -150,7 +152,18 @@ const CreditCards = () => {
       setSelectedCardId(null);
       cleanData()
     } catch (error: any) {
-      alert(`Erro ao salvar as alterações:, ${error}`);
+      if (error.response && error.response.data) {
+        const errorData = error.response.data;
+
+        const errorMessages: any = Object.keys(errorData).map((key) => ({
+          field: key,
+          message: errorData[key][0], // Pegar a primeira mensagem de erro para cada campo
+        }));
+
+        setErrorMessages(errorMessages);
+      } else {
+        console.error('Erro ao salvar as alterações:', error);
+      }
     }
   };
 
@@ -227,11 +240,11 @@ const CreditCards = () => {
 
                       <div>
                         <div>
-                         
+
                           <S.CustomEditButton onClick={() => handleEditClick(card.id)}>
                             <MdModeEdit />
                           </S.CustomEditButton>
-                        
+
                           <S.CustomDeleteButton onClick={() => handleDeleteClick(card.id)}>
                             <MdDelete />
                           </S.CustomDeleteButton>
@@ -262,7 +275,20 @@ const CreditCards = () => {
             contentLabel="Editar Cartão de Crédito"
             style={customStyles}
           >
+
             <h2>{newCard ? 'Adicionar novo cartão' : 'Editar Cartão'}</h2>
+            {errorMessages.length > 0 && (
+              <div style={{color: 'red'}}>
+                <h3>Atenção:</h3>
+                <ul>
+                  {errorMessages.map((error: any, index) => (
+                    <li key={index}>
+                      <strong>{error?.field}:</strong> {error.message}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <S.CustomInputContainer>
               <S.CustomLabel>Titular:</S.CustomLabel>
               <S.CustomInput
