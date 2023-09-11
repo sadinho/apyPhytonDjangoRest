@@ -172,5 +172,19 @@ Para acessar o servidor, abra um navegador em `http://localhost:3000`.
 
 Para logar a api Django deve ja estar rodando na porta 8000
 Logar com o usuario cadastrado 
+#### Tela Front nextjs
+Login
+![Tela front](https://user-images.githubusercontent.com/50503203/266889666-735085dc-540f-4c72-841a-2fc1c00492ff.png)
+
+Tabela paginada
+![Tela front](https://user-images.githubusercontent.com/50503203/266889814-7db0b75d-8169-4bfb-bbd9-785fe0d0aafe.png)
+
+Modais
+![Tela front](https://user-images.githubusercontent.com/50503203/266889961-43c2139d-8038-4803-afba-b05062277c0c.png)
+![Tela front](https://user-images.githubusercontent.com/50503203/266890097-27c62103-1f62-4538-9f37-d5ae28043c2b.png)
+![Tela front](https://user-images.githubusercontent.com/50503203/266890221-b51abad7-e552-42d3-ad5c-27df3fd674e3.png)
+
+#### Mobile em card responsividade
+![Tela front](https://user-images.githubusercontent.com/50503203/266890450-c392a74f-1de2-439d-91db-1b979786a838.png)
 
 
