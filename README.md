@@ -118,5 +118,59 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 ```bash
 Authorization: Bearer seu-token-jwt-aqui
 ```
+# my-credit-card-app frontend em nextjs
+
+# Como usar o Dockerfile
+
+Este Dockerfile pode ser usado para construir uma imagem Docker para o projeto Next `my-credit-card-app`.
+
+## Construindo a imagem
+
+Para construir a imagem, execute o seguinte comando:
+```bash
+docker build -t my-credit-card-app .
+```
+Isso criará uma imagem chamada `my-credit-card-app`.
+
+## Executando a imagem
+
+Para executar a imagem, execute o seguinte comando:
+```bash
+docker run -p 3000:3000 my-credit-card-app
+```
+Isso iniciará o servidor Next na porta 3000.
+
+## Acesso ao servidor
+
+Para acessar o servidor, abra um navegador em `http://localhost:3000`.
+
+# Como instalar e rodar o Next.js
+
+O Next.js é uma estrutura de desenvolvimento de aplicações web frontend React que facilita a criação de aplicações web estáticas e servidoras.
+
+## Instalando 
+
+Para instalar , execute o seguinte comando:
+```bash
+npm install
+ou
+yarn
+```
+Apos isso pode rodar 
+```bash
+npm run dev
+npm run build
+npm run start
+ou
+yarn dev
+yarn build
+yarn start
+```
+
+
+Para acessar o servidor, abra um navegador em `http://localhost:3000`.
+
+Para logar a api Django deve ja estar rodando na porta 8000
+Logar com o usuario cadastrado 
 
 
